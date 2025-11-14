@@ -1,0 +1,430 @@
+{
+  "position": "Infrastructure Support Engineer (SRE)",
+  "exportDate": "2024-11-14T10:30:00.000Z",
+  "candidates": [
+    {
+      "name": "Pramod",
+      "totalScore": 156,
+      "maxScore": 250,
+      "percentage": "62.4",
+      "sections": [
+        {
+          "name": "Monitoring & Observability",
+          "weight": 25,
+          "questions": [
+            {
+              "id": 1,
+              "question": "Describe a monitoring stack you've worked with. How would you set up monitoring for a microservices architecture on AWS?",
+              "score": 6,
+              "notes": "Good understanding of CloudWatch and basic Prometheus. Limited experience with distributed tracing."
+            },
+            {
+              "id": 2,
+              "question": "How would you implement alerting rules to reduce false positives while ensuring critical issues aren't missed?",
+              "score": 5,
+              "notes": "Mentioned basic alert thresholds. Could improve on deduplication strategies."
+            },
+            {
+              "id": 3,
+              "question": "Application response time increased from 200ms to 2s. Walk through your troubleshooting approach.",
+              "score": 7,
+              "notes": "Solid systematic approach. Started with metrics, checked logs, identified database as bottleneck."
+            },
+            {
+              "id": 4,
+              "question": "How would you design a Grafana dashboard for production? What key metrics would you include?",
+              "score": 6,
+              "notes": "Good knowledge of basic metrics. Mentioned golden signals but limited dashboard design experience."
+            }
+          ]
+        },
+        {
+          "name": "AWS Technical Knowledge",
+          "weight": 20,
+          "questions": [
+            {
+              "id": 5,
+              "question": "Explain the difference between EC2, ECS, and Lambda. When would you use each?",
+              "score": 7,
+              "notes": "Clear understanding of differences. Has AWS certification. Practical examples provided."
+            },
+            {
+              "id": 6,
+              "question": "How would you implement auto-scaling for variable traffic patterns in AWS?",
+              "score": 6,
+              "notes": "Knows target tracking and basic CloudWatch alarms. Less familiar with predictive scaling."
+            },
+            {
+              "id": 7,
+              "question": "What strategies would you use to reduce AWS costs without impacting performance?",
+              "score": 0,
+              "notes": "Limited cost optimization experience. Mentioned only basic right-sizing."
+            },
+            {
+              "id": 8,
+              "question": "An EC2 instance is at 100% CPU. How would you investigate and resolve?",
+              "score": 8,
+              "notes": "Excellent troubleshooting approach. Mentioned metrics, SSH investigation, scaling options."
+            }
+          ]
+        },
+        {
+          "name": "Incident Response",
+          "weight": 30,
+          "questions": [
+            {
+              "id": 9,
+              "question": "It's 2 AM, production database is down. Walk through your incident response process.",
+              "score": 6,
+              "notes": "Good process understanding but limited real incident experience at this scale."
+            },
+            {
+              "id": 10,
+              "question": "Describe a critical incident you've handled. What was your approach and lessons learned?",
+              "score": 5,
+              "notes": "Described monitoring alert incident. Good learning attitude but less critical than desired."
+            },
+            {
+              "id": 11,
+              "question": "How do you communicate during a P1 incident with technical team, stakeholders, and customers?",
+              "score": 6,
+              "notes": "Understands different communication needs. Limited experience with executive stakeholders."
+            },
+            {
+              "id": 12,
+              "question": "What should be included in a post-mortem report?",
+              "score": 7,
+              "notes": "Solid understanding of RCA, timeline, action items. Mentioned blameless culture."
+            }
+          ]
+        },
+        {
+          "name": "Linux & Infrastructure",
+          "weight": 15,
+          "questions": [
+            {
+              "id": 13,
+              "question": "Write a bash script to check if a service is running and restart if down.",
+              "score": 6,
+              "notes": "Basic script structure correct. Missing error handling and retry logic."
+            },
+            {
+              "id": 14,
+              "question": "Linux server is running slow. What commands would you use to identify the issue?",
+              "score": 7,
+              "notes": "Good command knowledge: top, free, df, netstat. Systematic troubleshooting approach."
+            },
+            {
+              "id": 15,
+              "question": "How would you troubleshoot connectivity between two EC2 instances in different subnets?",
+              "score": 6,
+              "notes": "Mentioned security groups and basic networking. Could improve on route tables and NACLs."
+            }
+          ]
+        },
+        {
+          "name": "Automation & CI/CD",
+          "weight": 10,
+          "questions": [
+            {
+              "id": 16,
+              "question": "How would you implement a CI/CD pipeline for infrastructure using Infrastructure as Code?",
+              "score": 4,
+              "notes": "Basic CI/CD understanding. Limited hands-on with Terraform/IaC pipelines."
+            },
+            {
+              "id": 17,
+              "question": "How would you automate security patching across 100+ servers?",
+              "score": 5,
+              "notes": "Mentioned Systems Manager. Limited large-scale automation experience."
+            }
+          ]
+        },
+        {
+          "name": "Security & Compliance",
+          "weight": 5,
+          "questions": [
+            {
+              "id": 18,
+              "question": "How would you secure an AWS environment? What are key security best practices?",
+              "score": 7,
+              "notes": "Good security awareness: IAM, MFA, encryption, CloudTrail. Security-conscious mindset."
+            },
+            {
+              "id": 19,
+              "question": "How would you implement least privilege access in a cloud environment?",
+              "score": 6,
+              "notes": "Understands RBAC and temporary credentials. Could expand on policy design."
+            }
+          ]
+        },
+        {
+          "name": "24/7 Support Specific",
+          "weight": 10,
+          "questions": [
+            {
+              "id": 20,
+              "question": "How do you manage a 24/7 environment? How do you handle shift handovers?",
+              "score": 7,
+              "notes": "Has 24/7 support experience. Good handover documentation practices."
+            },
+            {
+              "id": 21,
+              "question": "Prioritize these issues: DB backup failure, slow application, password reset request, disk at 85% capacity, dev environment down. Explain your reasoning.",
+              "score": 8,
+              "notes": "Excellent prioritization skills. Correctly identified DB backup as P1 with good reasoning."
+            }
+          ]
+        },
+        {
+          "name": "Practical Skills",
+          "weight": 10,
+          "questions": [
+            {
+              "id": 22,
+              "question": "Analyze these logs: 'Connection timeout to database:3306, retry attempt 1/3... retry attempt 2/3... retry attempt 3/3... max retries reached, operation failed'. What's the issue and how would you troubleshoot?",
+              "score": 7,
+              "notes": "Quickly identified database connectivity issue. Solid troubleshooting steps."
+            },
+            {
+              "id": 23,
+              "question": "Write AWS CLI commands to: 1) List all running EC2 instances, 2) Create a snapshot of a specific volume, 3) Check CloudWatch metrics for an instance.",
+              "score": 6,
+              "notes": "Basic CLI syntax correct. Some advanced query features missing."
+            }
+          ]
+        },
+        {
+          "name": "Behavioral & Situational",
+          "weight": 5,
+          "questions": [
+            {
+              "id": 24,
+              "question": "How do you handle technical disagreements with colleagues during an active incident?",
+              "score": 8,
+              "notes": "Mature approach. Prioritizes resolution over ego. Good team player."
+            },
+            {
+              "id": 25,
+              "question": "How do you keep your technical skills updated in the rapidly changing cloud/DevOps landscape?",
+              "score": 7,
+              "notes": "Active learner. Recently completed AWS certification. Follows tech blogs."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Eshani",
+      "totalScore": 118,
+      "maxScore": 250,
+      "percentage": "47.2",
+      "sections": [
+        {
+          "name": "Monitoring & Observability",
+          "weight": 25,
+          "questions": [
+            {
+              "id": 1,
+              "question": "Describe a monitoring stack you've worked with. How would you set up monitoring for a microservices architecture on AWS?",
+              "score": 4,
+              "notes": "Basic RMM platform experience. Limited AWS and microservices exposure."
+            },
+            {
+              "id": 2,
+              "question": "How would you implement alerting rules to reduce false positives while ensuring critical issues aren't missed?",
+              "score": 3,
+              "notes": "Understands alert concept but limited implementation experience."
+            },
+            {
+              "id": 3,
+              "question": "Application response time increased from 200ms to 2s. Walk through your troubleshooting approach.",
+              "score": 5,
+              "notes": "Basic troubleshooting approach. More Windows-focused than Linux."
+            },
+            {
+              "id": 4,
+              "question": "How would you design a Grafana dashboard for production? What key metrics would you include?",
+              "score": 2,
+              "notes": "Limited Grafana experience. Knows basic metrics but not dashboard design."
+            }
+          ]
+        },
+        {
+          "name": "AWS Technical Knowledge",
+          "weight": 20,
+          "questions": [
+            {
+              "id": 5,
+              "question": "Explain the difference between EC2, ECS, and Lambda. When would you use each?",
+              "score": 1,
+              "notes": "Very limited AWS knowledge. Needs significant training."
+            },
+            {
+              "id": 6,
+              "question": "How would you implement auto-scaling for variable traffic patterns in AWS?",
+              "score": 0,
+              "notes": "No practical AWS auto-scaling experience."
+            },
+            {
+              "id": 7,
+              "question": "What strategies would you use to reduce AWS costs without impacting performance?",
+              "score": 1,
+              "notes": "Basic understanding but no practical experience."
+            },
+            {
+              "id": 8,
+              "question": "An EC2 instance is at 100% CPU. How would you investigate and resolve?",
+              "score": 1,
+              "notes": "Basic troubleshooting but limited EC2 specific knowledge."
+            }
+          ]
+        },
+        {
+          "name": "Incident Response",
+          "weight": 30,
+          "questions": [
+            {
+              "id": 9,
+              "question": "It's 2 AM, production database is down. Walk through your incident response process.",
+              "score": 4,
+              "notes": "Has L1 support background. Limited critical incident experience."
+            },
+            {
+              "id": 10,
+              "question": "Describe a critical incident you've handled. What was your approach and lessons learned?",
+              "score": 3,
+              "notes": "Described desktop support incident. Not at infrastructure scale."
+            },
+            {
+              "id": 11,
+              "question": "How do you communicate during a P1 incident with technical team, stakeholders, and customers?",
+              "score": 5,
+              "notes": "Good communication skills. Customer service background helpful."
+            },
+            {
+              "id": 12,
+              "question": "What should be included in a post-mortem report?",
+              "score": 4,
+              "notes": "Basic understanding. Limited practical experience writing post-mortems."
+            }
+          ]
+        },
+        {
+          "name": "Linux & Infrastructure",
+          "weight": 15,
+          "questions": [
+            {
+              "id": 13,
+              "question": "Write a bash script to check if a service is running and restart if down.",
+              "score": 2,
+              "notes": "Basic scripting knowledge. More PowerShell than Bash experience."
+            },
+            {
+              "id": 14,
+              "question": "Linux server is running slow. What commands would you use to identify the issue?",
+              "score": 3,
+              "notes": "Knows some basic commands but limited Linux troubleshooting."
+            },
+            {
+              "id": 15,
+              "question": "How would you troubleshoot connectivity between two EC2 instances in different subnets?",
+              "score": 2,
+              "notes": "CCNA knowledge helpful for networking concepts. Limited AWS networking."
+            }
+          ]
+        },
+        {
+          "name": "Automation & CI/CD",
+          "weight": 10,
+          "questions": [
+            {
+              "id": 16,
+              "question": "How would you implement a CI/CD pipeline for infrastructure using Infrastructure as Code?",
+              "score": 1,
+              "notes": "Limited automation experience. Willing to learn."
+            },
+            {
+              "id": 17,
+              "question": "How would you automate security patching across 100+ servers?",
+              "score": 3,
+              "notes": "Has used RMM for patching. Limited large-scale automation."
+            }
+          ]
+        },
+        {
+          "name": "Security & Compliance",
+          "weight": 5,
+          "questions": [
+            {
+              "id": 18,
+              "question": "How would you secure an AWS environment? What are key security best practices?",
+              "score": 3,
+              "notes": "Basic security awareness. CCNA background helpful."
+            },
+            {
+              "id": 19,
+              "question": "How would you implement least privilege access in a cloud environment?",
+              "score": 3,
+              "notes": "Understands concept theoretically. Limited practical implementation."
+            }
+          ]
+        },
+        {
+          "name": "24/7 Support Specific",
+          "weight": 10,
+          "questions": [
+            {
+              "id": 20,
+              "question": "How do you manage a 24/7 environment? How do you handle shift handovers?",
+              "score": 6,
+              "notes": "Good support background. Strong documentation habits."
+            },
+            {
+              "id": 21,
+              "question": "Prioritize these issues: DB backup failure, slow application, password reset request, disk at 85% capacity, dev environment down. Explain your reasoning.",
+              "score": 5,
+              "notes": "Good prioritization instincts from support background."
+            }
+          ]
+        },
+        {
+          "name": "Practical Skills",
+          "weight": 10,
+          "questions": [
+            {
+              "id": 22,
+              "question": "Analyze these logs: 'Connection timeout to database:3306, retry attempt 1/3... retry attempt 2/3... retry attempt 3/3... max retries reached, operation failed'. What's the issue and how would you troubleshoot?",
+              "score": 4,
+              "notes": "Identified connectivity issue. Basic troubleshooting approach."
+            },
+            {
+              "id": 23,
+              "question": "Write AWS CLI commands to: 1) List all running EC2 instances, 2) Create a snapshot of a specific volume, 3) Check CloudWatch metrics for an instance.",
+              "score": 1,
+              "notes": "Very limited AWS CLI knowledge."
+            }
+          ]
+        },
+        {
+          "name": "Behavioral & Situational",
+          "weight": 5,
+          "questions": [
+            {
+              "id": 24,
+              "question": "How do you handle technical disagreements with colleagues during an active incident?",
+              "score": 7,
+              "notes": "Good interpersonal skills. Customer-focused approach."
+            },
+            {
+              "id": 25,
+              "question": "How do you keep your technical skills updated in the rapidly changing cloud/DevOps landscape?",
+              "score": 6,
+              "notes": "Eager to learn. Recently started cloud learning path."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
