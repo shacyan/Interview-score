@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interview Scoring System - Individual Mode</title>
+    <title>Professional Interview Evaluation System</title>
     <style>
         * {
             margin: 0;
@@ -12,80 +12,129 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #7e22ce 100%);
             min-height: 100vh;
             padding: 20px;
+            line-height: 1.6;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             background: white;
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 25px 70px rgba(0,0,0,0.35);
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 3px solid #f0f0f0;
+            padding-bottom: 30px;
         }
 
         h1 {
-            color: #333;
-            text-align: center;
-            margin-bottom: 30px;
-            font-size: 2.5em;
+            color: #1a202c;
+            font-size: 2.8em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            color: #718096;
+            font-size: 1.1em;
+            margin-top: 10px;
+        }
+
+        .help-text {
+            background: #edf2f7;
+            border-left: 4px solid #4299e1;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            color: #2d3748;
+        }
+
+        .help-text strong {
+            color: #2b6cb0;
         }
 
         .mode-selector {
             display: flex;
             justify-content: center;
             gap: 20px;
-            margin-bottom: 30px;
+            margin-bottom: 35px;
         }
 
         .mode-btn {
-            padding: 15px 30px;
-            border-radius: 10px;
-            border: 2px solid #667eea;
+            padding: 18px 35px;
+            border-radius: 12px;
+            border: 2px solid #4299e1;
             background: white;
-            color: #667eea;
-            font-size: 16px;
+            color: #2b6cb0;
+            font-size: 17px;
+            font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .mode-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(66, 153, 225, 0.3);
         }
 
         .mode-btn.active {
-            background: #667eea;
+            background: linear-gradient(135deg, #4299e1 0%, #3182ce 100%);
             color: white;
+            border-color: #3182ce;
         }
 
-        .header-section {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 10px;
+        .setup-section {
+            background: linear-gradient(135deg, #fff5f5 0%, #fef5e7 100%);
+            padding: 30px;
+            border-radius: 15px;
             margin-bottom: 30px;
+            border: 2px solid #feb2b2;
         }
 
         .button-group {
             display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
+            gap: 12px;
+            margin-bottom: 25px;
             flex-wrap: wrap;
             justify-content: center;
         }
 
         button {
-            background: #667eea;
+            background: linear-gradient(135deg, #4299e1 0%, #3182ce 100%);
             color: white;
             border: none;
-            padding: 12px 24px;
-            border-radius: 8px;
+            padding: 14px 28px;
+            border-radius: 10px;
             cursor: pointer;
             font-size: 16px;
-            transition: all 0.3s;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(66, 153, 225, 0.3);
         }
 
         button:hover {
-            background: #5a67d8;
             transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(66, 153, 225, 0.4);
+            background: linear-gradient(135deg, #3182ce 0%, #2c5282 100%);
+        }
+
+        button:active {
+            transform: translateY(0);
         }
 
         .file-input-wrapper {
@@ -102,295 +151,458 @@
         }
 
         .file-label {
-            background: #48bb78;
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
             color: white;
-            padding: 12px 24px;
-            border-radius: 8px;
+            padding: 14px 28px;
+            border-radius: 10px;
             cursor: pointer;
             display: inline-block;
-            transition: all 0.3s;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(72, 187, 120, 0.3);
         }
 
         .file-label:hover {
-            background: #38a169;
+            background: linear-gradient(135deg, #38a169 0%, #2f855a 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(72, 187, 120, 0.4);
+        }
+
+        .candidate-setup {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-top: 20px;
+            text-align: center;
+            border: 2px dashed #cbd5e0;
+        }
+
+        .candidate-setup h3 {
+            color: #2d3748;
+            margin-bottom: 20px;
+            font-size: 1.3em;
+        }
+
+        .input-group {
+            margin: 20px 0;
+        }
+
+        .input-group label {
+            display: block;
+            color: #4a5568;
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 1.05em;
+        }
+
+        input[type="text"] {
+            width: 85%;
+            padding: 15px 20px;
+            border: 2px solid #cbd5e0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            margin: 10px 0;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #4299e1;
+            box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.1);
         }
 
         .candidate-selector {
-            background: #fff3cd;
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            text-align: center;
+            background: linear-gradient(135deg, #e6fffa 0%, #b2f5ea 100%);
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            border: 2px solid #81e6d9;
+        }
+
+        .candidate-selector h3 {
+            color: #234e52;
+            margin-bottom: 15px;
+            font-size: 1.2em;
         }
 
         .candidate-buttons {
             display: flex;
-            gap: 10px;
+            gap: 12px;
             margin-top: 15px;
             flex-wrap: wrap;
             justify-content: center;
         }
 
         .candidate-btn {
-            padding: 10px 20px;
-            border-radius: 8px;
-            border: 2px solid #667eea;
+            padding: 12px 25px;
+            border-radius: 10px;
+            border: 2px solid #4299e1;
             background: white;
-            color: #667eea;
+            color: #2b6cb0;
             cursor: pointer;
-            transition: all 0.3s;
+            font-weight: 600;
+            transition: all 0.3s ease;
             position: relative;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .candidate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(66, 153, 225, 0.3);
         }
 
         .candidate-btn.active {
-            background: #667eea;
+            background: linear-gradient(135deg, #4299e1 0%, #3182ce 100%);
             color: white;
+            border-color: #3182ce;
         }
 
         .candidate-btn.completed {
-            background: #48bb78;
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
             color: white;
-            border-color: #48bb78;
+            border-color: #38a169;
         }
 
         .candidate-score-badge {
             position: absolute;
             top: -10px;
             right: -10px;
-            background: #fc8181;
+            background: linear-gradient(135deg, #f56565 0%, #e53e3e 100%);
             color: white;
             border-radius: 50%;
-            width: 25px;
-            height: 25px;
+            width: 28px;
+            height: 28px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 12px;
+            font-size: 13px;
             font-weight: bold;
+            box-shadow: 0 2px 8px rgba(245, 101, 101, 0.4);
         }
 
         .question-navigation {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
-            padding: 15px;
-            background: #e6fffa;
-            border-radius: 10px;
+            margin-bottom: 25px;
+            padding: 20px 25px;
+            background: linear-gradient(135deg, #ebf8ff 0%, #bee3f8 100%);
+            border-radius: 12px;
+            border: 2px solid #90cdf4;
         }
 
         .question-counter {
-            font-size: 1.2em;
+            font-size: 1.3em;
             font-weight: bold;
-            color: #667eea;
+            color: #2c5282;
         }
 
         .nav-buttons {
             display: flex;
-            gap: 10px;
+            gap: 12px;
         }
 
         .nav-btn {
-            padding: 8px 16px;
-            background: #667eea;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #4299e1 0%, #3182ce 100%);
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 8px;
             cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover:not(:disabled) {
+            background: linear-gradient(135deg, #3182ce 0%, #2c5282 100%);
         }
 
         .nav-btn:disabled {
             background: #cbd5e0;
             cursor: not-allowed;
+            opacity: 0.6;
         }
 
         .question-card {
             background: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
+            padding: 35px;
+            border-radius: 16px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+            margin-bottom: 25px;
+            border: 1px solid #e2e8f0;
         }
 
         .section-info {
-            background: #667eea;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 10px 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
             display: flex;
             justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+
+        .section-info span {
+            font-weight: 600;
+            font-size: 1.05em;
         }
 
         .question-text {
-            font-size: 1.3em;
-            font-weight: bold;
-            color: #333;
-            margin-bottom: 20px;
-            line-height: 1.5;
+            font-size: 1.35em;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 25px;
+            line-height: 1.6;
+            padding: 20px;
+            background: #f7fafc;
+            border-radius: 10px;
+            border-left: 5px solid #4299e1;
         }
 
         .expected-answer {
-            background: #e6fffa;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            border-left: 4px solid #48bb78;
+            background: linear-gradient(135deg, #f0fff4 0%, #c6f6d5 100%);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            border-left: 5px solid #48bb78;
+        }
+
+        .expected-answer strong {
+            color: #22543d;
+            font-size: 1.1em;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .expected-answer-content {
+            color: #2f855a;
+            line-height: 1.7;
+            font-size: 1.02em;
         }
 
         .score-section {
-            background: #f7fafc;
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
+            background: linear-gradient(135deg, #fafafa 0%, #f0f0f0 100%);
+            padding: 30px;
+            border-radius: 12px;
+            border: 2px solid #e2e8f0;
         }
 
         .score-label {
-            font-size: 1.1em;
-            margin-bottom: 15px;
-            color: #555;
+            font-size: 1.15em;
+            margin-bottom: 20px;
+            color: #2d3748;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .score-guide {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 0.9em;
+            color: #4a5568;
+            text-align: center;
+            border: 1px solid #e2e8f0;
         }
 
         .score-buttons {
             display: flex;
-            gap: 10px;
+            gap: 12px;
             justify-content: center;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             flex-wrap: wrap;
         }
 
         .score-btn {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
             border: 2px solid #cbd5e0;
             background: white;
             cursor: pointer;
-            font-size: 16px;
+            font-size: 17px;
             font-weight: bold;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
+            color: #4a5568;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
         }
 
         .score-btn:hover {
             transform: scale(1.1);
-            border-color: #667eea;
+            border-color: #4299e1;
+            box-shadow: 0 4px 12px rgba(66, 153, 225, 0.3);
         }
 
         .score-btn.selected {
-            background: #667eea;
+            background: linear-gradient(135deg, #4299e1 0%, #3182ce 100%);
             color: white;
-            border-color: #667eea;
+            border-color: #3182ce;
+            transform: scale(1.15);
+            box-shadow: 0 6px 16px rgba(66, 153, 225, 0.4);
+        }
+
+        .notes-section {
+            margin-top: 25px;
+        }
+
+        .notes-section label {
+            display: block;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 10px;
+            font-size: 1.05em;
         }
 
         .notes-input {
             width: 100%;
-            padding: 12px;
+            padding: 15px;
             border: 2px solid #cbd5e0;
-            border-radius: 8px;
-            margin-top: 15px;
+            border-radius: 10px;
             resize: vertical;
-            min-height: 100px;
-            font-size: 14px;
+            min-height: 120px;
+            font-size: 15px;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .notes-input:focus {
+            outline: none;
+            border-color: #4299e1;
+            box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.1);
         }
 
         .progress-bar {
             background: #e2e8f0;
-            height: 10px;
-            border-radius: 5px;
-            margin: 20px 0;
+            height: 12px;
+            border-radius: 6px;
+            margin: 25px 0;
             overflow: hidden;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
         }
 
         .progress-fill {
             height: 100%;
-            background: linear-gradient(90deg, #48bb78, #667eea);
-            transition: width 0.3s;
+            background: linear-gradient(90deg, #48bb78, #4299e1, #9f7aea);
+            transition: width 0.4s ease;
+            border-radius: 6px;
+            box-shadow: 0 2px 8px rgba(72, 187, 120, 0.4);
+        }
+
+        .progress-text {
+            text-align: center;
+            color: #4a5568;
+            font-size: 0.95em;
+            margin-top: 8px;
+            font-weight: 600;
         }
 
         .summary-section {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 25px;
-            border-radius: 10px;
+            padding: 35px;
+            border-radius: 16px;
             margin-top: 30px;
+            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.4);
+        }
+
+        .summary-section h2 {
+            margin-bottom: 15px;
+            font-size: 2em;
         }
 
         .summary-table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 20px;
+            margin-top: 25px;
             background: white;
-            color: #333;
-            border-radius: 10px;
+            color: #2d3748;
+            border-radius: 12px;
             overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         }
 
         .summary-table th,
         .summary-table td {
-            padding: 12px;
+            padding: 15px;
             text-align: left;
             border-bottom: 1px solid #e2e8f0;
         }
 
         .summary-table th {
-            background: #667eea;
+            background: linear-gradient(135deg, #4299e1 0%, #3182ce 100%);
             color: white;
-            font-weight: bold;
+            font-weight: 600;
+            font-size: 1.05em;
         }
 
         .summary-table tr:hover {
             background: #f7fafc;
         }
 
+        .summary-table tr:last-child td {
+            border-bottom: none;
+        }
+
         .final-scores {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 25px;
         }
 
         .candidate-score-card {
             background: white;
-            color: #333;
-            padding: 20px;
-            border-radius: 10px;
+            color: #2d3748;
+            padding: 30px;
+            border-radius: 16px;
             text-align: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+            transition: all 0.3s ease;
+        }
+
+        .candidate-score-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 28px rgba(0,0,0,0.3);
         }
 
         .candidate-name {
             font-weight: bold;
-            font-size: 1.2em;
-            margin-bottom: 10px;
-            color: #667eea;
+            font-size: 1.4em;
+            margin-bottom: 15px;
+            color: #2b6cb0;
         }
 
         .total-score {
-            font-size: 2.5em;
+            font-size: 3em;
             font-weight: bold;
-            margin: 10px 0;
+            margin: 15px 0;
         }
 
-        .score-excellent { color: #48bb78; }
-        .score-good { color: #f6ad55; }
-        .score-average { color: #fc8181; }
+        .score-excellent { color: #38a169; }
+        .score-good { color: #dd6b20; }
+        .score-average { color: #e53e3e; }
 
         .rank-badge {
             display: inline-block;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.9em;
-            margin-top: 10px;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-size: 1em;
+            margin-top: 15px;
+            font-weight: bold;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
         }
 
-        .rank-1 { background: gold; color: #333; }
-        .rank-2 { background: silver; color: #333; }
-        .rank-3 { background: #cd7f32; color: white; }
-        .rank-4 { background: #666; color: white; }
+        .rank-1 { background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%); color: #744210; }
+        .rank-2 { background: linear-gradient(135deg, #c0c0c0 0%, #e8e8e8 100%); color: #4a5568; }
+        .rank-3 { background: linear-gradient(135deg, #cd7f32 0%, #e59866 100%); color: white; }
+        .rank-4 { background: linear-gradient(135deg, #718096 0%, #4a5568 100%); color: white; }
 
         .export-section {
             text-align: center;
-            margin-top: 30px;
+            margin-top: 35px;
             display: flex;
             gap: 15px;
             justify-content: center;
@@ -398,9 +610,14 @@
         }
 
         .export-btn {
-            background: #48bb78;
-            padding: 15px 30px;
-            font-size: 1.1em;
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            padding: 16px 35px;
+            font-size: 1.15em;
+            box-shadow: 0 4px 12px rgba(72, 187, 120, 0.3);
+        }
+
+        .export-btn:hover {
+            background: linear-gradient(135deg, #38a169 0%, #2f855a 100%);
         }
 
         .hidden {
@@ -409,70 +626,163 @@
 
         .sample-json {
             background: #2d3748;
-            color: #48bb78;
-            padding: 15px;
-            border-radius: 8px;
+            color: #68d391;
+            padding: 20px;
+            border-radius: 10px;
             font-family: 'Courier New', monospace;
-            font-size: 12px;
+            font-size: 13px;
             margin-top: 20px;
             overflow-x: auto;
             white-space: pre;
+            box-shadow: inset 0 2px 8px rgba(0,0,0,0.3);
         }
 
         .completion-message {
             text-align: center;
-            padding: 30px;
-            background: #48bb78;
+            padding: 40px;
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
             color: white;
-            border-radius: 10px;
-            margin: 20px 0;
+            border-radius: 16px;
+            margin: 25px 0;
+            box-shadow: 0 8px 24px rgba(72, 187, 120, 0.4);
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .completion-message h2 {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
+            font-size: 2.2em;
+        }
+
+        .completion-stats {
+            font-size: 1.3em;
+            line-height: 1.8;
+            margin: 20px 0;
+        }
+
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            cursor: help;
+            color: #4299e1;
+            font-weight: bold;
+            margin-left: 5px;
+        }
+
+        .tooltip:hover::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #2d3748;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            white-space: nowrap;
+            font-size: 0.85em;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+
+        .status-message {
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            font-weight: 600;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        .status-success {
+            background: #c6f6d5;
+            color: #22543d;
+            border-left: 5px solid #38a169;
+        }
+
+        .status-info {
+            background: #bee3f8;
+            color: #2c5282;
+            border-left: 5px solid #4299e1;
+        }
+
+        .status-warning {
+            background: #feebc8;
+            color: #7c2d12;
+            border-left: 5px solid #dd6b20;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            .mode-btn {
+                padding: 12px 20px;
+                font-size: 15px;
+            }
+
+            .question-text {
+                font-size: 1.15em;
+            }
+
+            .score-buttons {
+                gap: 8px;
+            }
+
+            .score-btn {
+                width: 45px;
+                height: 45px;
+                font-size: 15px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>🎯 Interview Scoring System</h1>
+        <div class="header">
+            <h1>Professional Interview Evaluation System</h1>
+            <p class="subtitle">Comprehensive Candidate Assessment & Scoring Platform</p>
+        </div>
+
+        <div class="help-text">
+            <strong>Welcome to the Interview Evaluation System!</strong> This tool helps you conduct structured, fair, and comprehensive technical interviews. Score candidates consistently across multiple skill areas and make data-driven hiring decisions.
+        </div>
 
         <div class="mode-selector">
             <button class="mode-btn active" onclick="setMode('individual')">
-                👤 Individual Interview Mode
+                Individual Assessment Mode
             </button>
             <button class="mode-btn" onclick="setMode('comparison')">
-                👥 Comparison Mode
+                Comparative Analysis Mode
             </button>
         </div>
 
-        <div class="header-section">
+        <div class="setup-section">
+            <h3 style="color: #742a2a; margin-bottom: 20px; font-size: 1.3em;">Step 1: Load Interview Questions</h3>
             <div class="button-group">
                 <div class="file-input-wrapper">
                     <input type="file" id="jsonFile" accept=".json">
-                    <label for="jsonFile" class="file-label">📁 Load Questions (JSON)</label>
+                    <label for="jsonFile" class="file-label">📁 Import Questions (JSON)</label>
                 </div>
                 <div class="file-input-wrapper">
                     <input type="file" id="csvFile" accept=".csv">
-                    <label for="csvFile" class="file-label" style="background: #f6ad55;">📊 Load from CSV</label>
+                    <label for="csvFile" class="file-label" style="background: linear-gradient(135deg, #ed8936 0%, #dd6b20 100%);">📊 Import from CSV</label>
                 </div>
-                <button onclick="loadSampleQuestions()">📝 Load SRE Sample</button>
-                <button onclick="showJSONFormat()">📋 Show Format</button>
-                <button onclick="showSummary()">📊 View Summary</button>
-                <button onclick="resetAll()">🔄 Reset All</button>
-            </div>
-
-            <div id="candidateSetup" class="candidate-selector">
-                <strong>Enter Candidate Names (comma separated):</strong>
-                <input type="text" id="candidateNames" style="width: 80%; padding: 10px; margin: 10px 0; border-radius: 5px; border: 2px solid #cbd5e0;"
-                       placeholder="e.g., Pramod, Eshani, Chaveen, Ishara">
-                <button onclick="initializeCandidates()" style="background: #48bb78; margin-left: 10px;">
-                    ✅ Set Candidates & Start
-                </button>
+                <button onclick="loadSampleQuestions()" style="background: linear-gradient(135deg, #9f7aea 0%, #805ad5 100%);">📝 Use SRE Sample Questions</button>
+                <button onclick="showJSONFormat()">📋 View Format Guide</button>
             </div>
 
             <div id="jsonFormatSection" class="hidden">
-                <h3>JSON Format Example:</h3>
+                <h3 style="margin: 20px 0; color: #2d3748;">Question File Format Example:</h3>
+                <p style="color: #4a5568; margin-bottom: 15px;">Use this structure to create your own interview question sets:</p>
                 <pre class="sample-json">{
   "position": "Infrastructure Support Engineer (SRE)",
   "sections": [
@@ -482,8 +792,8 @@
       "questions": [
         {
           "id": 1,
-          "question": "Your question text here",
-          "expectedAnswer": "Key points to look for"
+          "question": "Your interview question here",
+          "expectedAnswer": "Key evaluation criteria and expected response"
         }
       ]
     }
@@ -492,9 +802,28 @@
             </div>
         </div>
 
+        <div id="candidateSetup" class="candidate-setup">
+            <h3>Step 2: Configure Interview Candidates</h3>
+            <p style="color: #718096; margin-bottom: 20px;">Enter the names of all candidates you'll be interviewing (separate multiple names with commas)</p>
+            <div class="input-group">
+                <input type="text" id="candidateNames"
+                       placeholder="Example: John Smith, Sarah Johnson, Michael Chen, Emily Davis"
+                       style="width: 90%;">
+            </div>
+            <button onclick="initializeCandidates()" style="background: linear-gradient(135deg, #48bb78 0%, #38a169 100%); font-size: 1.1em; padding: 16px 40px; margin-top: 15px;">
+                ✅ Initialize Interview Session
+            </button>
+            <p style="color: #718096; margin-top: 15px; font-size: 0.95em;">
+                <strong>Note:</strong> Make sure to load questions first before initializing candidates
+            </p>
+        </div>
+
         <div id="individualMode" class="hidden">
             <div class="candidate-selector">
-                <strong>Select Candidate to Interview:</strong>
+                <h3>Select Candidate to Evaluate:</h3>
+                <p style="color: #234e52; margin-top: 10px; font-size: 0.95em;">
+                    Click on a candidate's name to begin or continue their interview assessment
+                </p>
                 <div class="candidate-buttons" id="candidateButtons"></div>
             </div>
 
@@ -504,22 +833,26 @@
                     <div class="nav-buttons">
                         <button class="nav-btn" onclick="previousQuestion()" id="prevBtn">← Previous</button>
                         <button class="nav-btn" onclick="nextQuestion()" id="nextBtn">Next →</button>
-                        <button class="nav-btn" onclick="finishCandidate()" style="background: #48bb78;">Finish Candidate</button>
+                        <button class="nav-btn" onclick="finishCandidate()" style="background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);">✓ Complete Interview</button>
                     </div>
                 </div>
 
                 <div class="progress-bar">
                     <div class="progress-fill" id="progressBar" style="width: 0%"></div>
                 </div>
+                <div class="progress-text" id="progressText">0% Complete</div>
 
                 <div class="question-card" id="questionCard"></div>
             </div>
 
             <div id="completionMessage" class="hidden completion-message">
-                <h2>✅ Interview Complete!</h2>
-                <p id="completionText"></p>
-                <button onclick="selectNextCandidate()" style="background: white; color: #667eea; margin-top: 15px;">
-                    Interview Next Candidate
+                <h2>✅ Interview Assessment Complete!</h2>
+                <div class="completion-stats" id="completionText"></div>
+                <button onclick="selectNextCandidate()" style="background: white; color: #2b6cb0; margin-top: 20px; font-size: 1.1em; padding: 16px 35px;">
+                    Continue to Next Candidate →
+                </button>
+                <button onclick="showSummary()" style="background: linear-gradient(135deg, #805ad5 0%, #6b46c1 100%); margin-top: 20px; font-size: 1.1em; padding: 16px 35px;">
+                    📊 View All Results
                 </button>
             </div>
         </div>
@@ -546,8 +879,23 @@
             event.target.classList.add('active');
 
             if (mode === 'comparison') {
-                alert('Comparison mode allows you to see all candidates for each question. Please use Individual mode for one-by-one interviews.');
+                showMessage('Comparative Analysis mode allows you to evaluate all candidates side-by-side for each question. Currently, the Individual Assessment mode is optimized for conducting interviews one candidate at a time.', 'info');
             }
+        }
+
+        // Show status messages
+        function showMessage(message, type = 'info') {
+            const existingMessages = document.querySelectorAll('.status-message');
+            existingMessages.forEach(msg => msg.remove());
+
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `status-message status-${type}`;
+            messageDiv.textContent = message;
+
+            const container = document.querySelector('.setup-section');
+            container.insertBefore(messageDiv, container.firstChild);
+
+            setTimeout(() => messageDiv.remove(), 5000);
         }
 
         // Load JSON file
@@ -559,9 +907,9 @@
                     try {
                         questionsData = JSON.parse(e.target.result);
                         calculateTotalQuestions();
-                        alert('Questions loaded successfully! ' + totalQuestions + ' questions ready.');
+                        showMessage(`✓ Successfully loaded ${totalQuestions} interview questions from ${file.name}`, 'success');
                     } catch (error) {
-                        alert('Invalid JSON file. Please check the format.');
+                        showMessage('Unable to load file. Please ensure the JSON format is correct.', 'warning');
                     }
                 };
                 reader.readAsText(file);
@@ -575,6 +923,7 @@
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     parseCSVtoJSON(e.target.result);
+                    showMessage(`✓ Successfully imported ${totalQuestions} questions from CSV file`, 'success');
                 };
                 reader.readAsText(file);
             }
@@ -585,7 +934,6 @@
             const lines = csv.split('\n');
             const sections = {};
 
-            // Skip header
             for (let i = 1; i < lines.length; i++) {
                 const line = lines[i].trim();
                 if (!line) continue;
@@ -619,7 +967,6 @@
             };
 
             calculateTotalQuestions();
-            alert('CSV loaded successfully! ' + totalQuestions + ' questions imported.');
         }
 
         // Calculate total questions
@@ -643,18 +990,23 @@
                         "questions": [
                             {
                                 "id": 1,
-                                "question": "Describe a monitoring stack you've worked with. How would you set up monitoring for microservices on AWS?",
-                                "expectedAnswer": "CloudWatch, Prometheus+Grafana, ELK/EFK Stack, X-Ray, Golden Signals (Latency, Traffic, Errors, Saturation)"
+                                "question": "Describe a monitoring stack you've worked with. How would you set up monitoring for a microservices architecture on AWS?",
+                                "expectedAnswer": "Look for experience with CloudWatch, Prometheus+Grafana, ELK/EFK Stack, X-Ray, understanding of Golden Signals (Latency, Traffic, Errors, Saturation), distributed tracing concepts, and practical implementation knowledge."
                             },
                             {
                                 "id": 2,
-                                "question": "How would you implement alerting rules to reduce false positives?",
-                                "expectedAnswer": "Multi-condition alerts, dynamic thresholds, alert hierarchy (P1/P2/P3), deduplication, suppression windows"
+                                "question": "How would you implement alerting rules to reduce false positives while ensuring critical issues aren't missed?",
+                                "expectedAnswer": "Expect discussion of multi-condition alerts, dynamic thresholds, alert hierarchy (P1/P2/P3), deduplication strategies, suppression windows, and practical examples of alert tuning."
                             },
                             {
                                 "id": 3,
-                                "question": "Application response time increased from 200ms to 2s. Walk through troubleshooting.",
-                                "expectedAnswer": "Check dashboards, infrastructure metrics (CPU/Memory/Disk/Network), application logs, database queries, external dependencies"
+                                "question": "Application response time increased from 200ms to 2s. Walk through your troubleshooting approach.",
+                                "expectedAnswer": "Should demonstrate systematic methodology: check monitoring dashboards, review infrastructure metrics (CPU/Memory/Disk/Network), analyze application logs, examine database query performance, investigate external dependencies, and explain root cause analysis process."
+                            },
+                            {
+                                "id": 4,
+                                "question": "How would you design a Grafana dashboard for production monitoring? What key metrics would you include?",
+                                "expectedAnswer": "Look for knowledge of Golden Signals, business metrics, SLIs/SLOs, user journey metrics, system health indicators, proper visualization choices, drill-down capabilities, and alert integration."
                             }
                         ]
                     },
@@ -663,14 +1015,24 @@
                         "weight": 20,
                         "questions": [
                             {
-                                "id": 4,
+                                "id": 5,
                                 "question": "Explain the difference between EC2, ECS, and Lambda. When would you use each?",
-                                "expectedAnswer": "EC2: Full control VMs, ECS: Container orchestration, Lambda: Serverless for event-driven. Consider: control needs, scaling, cost, timeout limits"
+                                "expectedAnswer": "EC2: Full control VMs for traditional applications and persistent workloads. ECS: Container orchestration for microservices and scalable applications. Lambda: Serverless for event-driven, short-duration tasks. Should understand tradeoffs in control, scaling, cost, and timeout limits."
                             },
                             {
-                                "id": 5,
-                                "question": "How would you implement auto-scaling for variable traffic patterns?",
-                                "expectedAnswer": "Target tracking, step scaling, predictive scaling, CloudWatch alarms, proper cooldown periods"
+                                "id": 6,
+                                "question": "How would you implement auto-scaling for variable traffic patterns in AWS?",
+                                "expectedAnswer": "Should discuss target tracking scaling policies, step scaling for rapid changes, predictive scaling for known patterns, CloudWatch alarms, proper cooldown periods, health checks, connection draining, and testing methodologies."
+                            },
+                            {
+                                "id": 7,
+                                "question": "What strategies would you use to reduce AWS costs without impacting performance?",
+                                "expectedAnswer": "Right-sizing instances, Reserved Instances/Savings Plans, Spot instances for fault-tolerant workloads, S3 lifecycle policies, cleanup of unused resources, scheduled scaling for dev/test environments, CloudWatch cost monitoring, budget alerts."
+                            },
+                            {
+                                "id": 8,
+                                "question": "An EC2 instance is at 100% CPU utilization. How would you investigate and resolve this?",
+                                "expectedAnswer": "Check CloudWatch metrics for patterns, SSH to instance, use top/htop/ps to identify processes, review application logs, check for memory issues, consider vertical scaling (larger instance type) or horizontal scaling (more instances), implement caching if applicable."
                             }
                         ]
                     },
@@ -679,14 +1041,24 @@
                         "weight": 30,
                         "questions": [
                             {
-                                "id": 6,
-                                "question": "Production database is down at 2 AM. Walk through your incident response.",
-                                "expectedAnswer": "Acknowledge alert, assess impact, join bridge, diagnose (logs/metrics/connections), communicate, mitigate, document, post-mortem"
+                                "id": 9,
+                                "question": "It's 2 AM and the production database is down. Walk through your complete incident response process.",
+                                "expectedAnswer": "Acknowledge alert, assess customer impact scope, join incident bridge, diagnose systematically (check logs, metrics, recent changes, database connections), communicate to stakeholders, implement mitigation (failover, restore from backup), document timeline, conduct post-mortem. Should demonstrate calm, systematic approach under pressure."
                             },
                             {
-                                "id": 7,
-                                "question": "What should be included in a post-mortem report?",
-                                "expectedAnswer": "Timeline, root cause (5 Whys), impact assessment, what went well/wrong, action items with owners and dates"
+                                "id": 10,
+                                "question": "Describe a critical incident you've personally handled. What was your approach and what lessons did you learn?",
+                                "expectedAnswer": "Real experience with specific technical incident, systematic troubleshooting methodology, team collaboration, effective communication, resolution steps taken, reflection on what went well, areas for improvement, preventive measures implemented afterward. Should demonstrate learning mindset and ownership."
+                            },
+                            {
+                                "id": 11,
+                                "question": "How do you communicate during a P1 incident with technical teams, stakeholders, and customers?",
+                                "expectedAnswer": "Different communication styles for different audiences: technical details for engineering team, high-level impact and ETA for business stakeholders, customer-friendly language for external communication. Regular updates every 15-30 minutes, status page updates, post-incident summary. Clear, honest, professional communication."
+                            },
+                            {
+                                "id": 12,
+                                "question": "What should be included in a comprehensive post-mortem report?",
+                                "expectedAnswer": "Detailed incident timeline with key events, root cause analysis using 5 Whys technique, quantified impact assessment (affected users, duration, revenue impact), what worked well, what didn't work, actionable items with assigned owners and due dates, lessons learned. Blameless culture focus on process improvement."
                             }
                         ]
                     },
@@ -695,20 +1067,99 @@
                         "weight": 15,
                         "questions": [
                             {
-                                "id": 8,
-                                "question": "Write a bash script to check if a service is running and restart if down.",
-                                "expectedAnswer": "systemctl is-active, restart logic with retries, logging, error handling, notification on failure"
+                                "id": 13,
+                                "question": "Write a bash script to check if a service is running and restart it if it's down.",
+                                "expectedAnswer": "Should include: proper shebang, systemctl is-active check, conditional logic for restart, retry mechanism, logging to file or syslog, error handling, notification on failure (email/Slack), proper exit codes, consideration for cron scheduling, monitoring restart attempts to prevent loops."
+                            },
+                            {
+                                "id": 14,
+                                "question": "A Linux server is running slow. What commands and methodology would you use to identify the bottleneck?",
+                                "expectedAnswer": "Systematic approach using: top/htop for CPU and memory overview, free -h for memory details, iostat/iotop for disk I/O analysis, vmstat for virtual memory statistics, df -h for disk space, netstat/ss for network connections, journalctl/dmesg for system logs, sar for historical performance data. Should demonstrate methodical troubleshooting."
+                            },
+                            {
+                                "id": 15,
+                                "question": "How would you troubleshoot connectivity issues between two EC2 instances in different subnets?",
+                                "expectedAnswer": "Check security groups (inbound/outbound rules on both instances), Network ACLs (stateless, check both directions), route tables for both subnets, verify instances are in correct subnets, test connectivity with ping/telnet/nc, check VPC peering if applicable, verify DNS resolution, examine instance network interfaces, understand AWS networking layers."
                             }
                         ]
                     },
                     {
-                        "name": "24/7 Support",
+                        "name": "Automation & CI/CD",
                         "weight": 10,
                         "questions": [
                             {
-                                "id": 9,
-                                "question": "Prioritize: DB backup failure, slow app, password reset, disk 85%, dev env down",
-                                "expectedAnswer": "1. DB backup (P1-data loss risk), 2. Slow app (P1/P2-customer impact), 3. Disk 85% (P2-preventive), 4. Dev env (P3), 5. Password (P3)"
+                                "id": 16,
+                                "question": "How would you implement a CI/CD pipeline for infrastructure using Infrastructure as Code?",
+                                "expectedAnswer": "Git workflow (feature branches, pull request reviews), Terraform/CloudFormation for IaC definition, pipeline stages (validate syntax, plan changes, apply to dev/staging/prod), automated testing (terraform validate, tflint, policy checks like Sentinel), approval gates for production deployments, state management strategy, rollback capability. Tools: Jenkins, GitLab CI, GitHub Actions, CircleCI."
+                            },
+                            {
+                                "id": 17,
+                                "question": "How would you automate security patching across 100+ servers with minimal disruption?",
+                                "expectedAnswer": "AWS Systems Manager Patch Manager or Ansible playbooks for orchestration, phased rollout strategy (dev → staging → production), scheduled maintenance windows, automated testing post-patch to verify functionality, rollback procedures for failed patches, patch compliance reporting and tracking, emergency patching process for critical vulnerabilities. Consider different OS types and application dependencies."
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Security & Compliance",
+                        "weight": 5,
+                        "questions": [
+                            {
+                                "id": 18,
+                                "question": "How would you secure an AWS environment? What are the key security best practices?",
+                                "expectedAnswer": "IAM with least privilege principle, MFA for all users especially privileged accounts, encryption at rest and in transit, VPC with proper network segmentation, security groups as virtual firewalls, CloudTrail for comprehensive audit logging, GuardDuty for threat detection, Config for compliance monitoring, Secrets Manager for credentials, regular security assessments, systematic patch management, backup strategies."
+                            },
+                            {
+                                "id": 19,
+                                "question": "How would you implement least privilege access in a cloud environment?",
+                                "expectedAnswer": "Role-based access control (RBAC), assume roles instead of long-term credentials, temporary credentials via STS, regular access reviews and audits, remove unused permissions systematically, use IAM policies with specific resources and actions (not wildcards), implement service control policies (SCPs) at organization level, audit with IAM Access Analyzer, separation of duties, just-in-time access."
+                            }
+                        ]
+                    },
+                    {
+                        "name": "24/7 Support Operations",
+                        "weight": 10,
+                        "questions": [
+                            {
+                                "id": 20,
+                                "question": "How do you manage a 24/7 support environment? Describe your approach to shift handovers.",
+                                "expectedAnswer": "Fair on-call rotation schedule, comprehensive handover documentation (current issues, ongoing changes, planned maintenance), structured handover meetings, detailed runbooks for common issues, clear escalation procedures, knowledge base maintenance, work-life balance considerations, backup coverage arrangements. Should demonstrate experience with 24/7 operations and team coordination."
+                            },
+                            {
+                                "id": 21,
+                                "question": "Prioritize these simultaneous issues and explain your reasoning: Database backup failure, slow application performance, password reset request, disk at 85% capacity, development environment down.",
+                                "expectedAnswer": "1. Database backup failure (P1 - immediate data loss risk, compliance violation), 2. Slow application (P1/P2 - assess customer impact scope), 3. Disk 85% (P2 - preventive action before critical threshold), 4. Dev environment down (P3 - no customer impact, affects team productivity), 5. Password reset (P3 - single user impact). Should explain risk assessment methodology and business impact analysis."
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Practical Technical Skills",
+                        "weight": 10,
+                        "questions": [
+                            {
+                                "id": 22,
+                                "question": "Analyze these application logs and explain the issue and your troubleshooting approach: 'Connection timeout to database:3306, retry attempt 1/3... retry attempt 2/3... retry attempt 3/3... max retries reached, operation failed'",
+                                "expectedAnswer": "Identifies network connectivity issue to database on port 3306 (MySQL/MariaDB). Troubleshooting methodology: Verify database service is running, check network path (security groups, NACLs, firewall rules), assess database server load and health, verify connection limits haven't been exceeded, review application connection pooling configuration, test connectivity with telnet/nc, review database error logs, check for recent infrastructure changes."
+                            },
+                            {
+                                "id": 23,
+                                "question": "Write AWS CLI commands to: 1) List all running EC2 instances with their names, 2) Create a snapshot of a specific EBS volume, 3) Retrieve CloudWatch CPU metrics for an instance.",
+                                "expectedAnswer": "1) aws ec2 describe-instances --filters 'Name=instance-state-name,Values=running' --query 'Reservations[*].Instances[*].[InstanceId,Tags[?Key==`Name`].Value|[0],State.Name]' --output table; 2) aws ec2 create-snapshot --volume-id vol-1234567890abcdef0 --description 'Backup snapshot'; 3) aws cloudwatch get-metric-statistics --namespace AWS/EC2 --metric-name CPUUtilization --dimensions Name=InstanceId,Value=i-1234567890abcdef0 --start-time 2024-01-01T00:00:00Z --end-time 2024-01-01T23:59:59Z --period 3600 --statistics Average. Should demonstrate CLI proficiency."
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Behavioral & Professional Skills",
+                        "weight": 5,
+                        "questions": [
+                            {
+                                "id": 24,
+                                "question": "How do you handle technical disagreements with colleagues during an active production incident?",
+                                "expectedAnswer": "Remain professional and calm under pressure, focus on data and factual evidence not personal opinions, make quick decisions prioritizing incident resolution over individual preferences, document different approaches for post-incident review and learning, escalate to senior engineer or manager if consensus can't be reached quickly, learn from different perspectives afterward. Incident resolution and customer impact mitigation takes priority over individual ego."
+                            },
+                            {
+                                "id": 25,
+                                "question": "How do you keep your technical skills current in the rapidly evolving cloud and DevOps landscape?",
+                                "expectedAnswer": "Continuous learning through official AWS/Azure/GCP documentation, pursue relevant certifications (AWS Solutions Architect, SysOps Administrator, DevOps Engineer), hands-on practice in sandbox/lab environments, follow technical blogs and industry publications, participate in communities and forums, attend conferences and webinars, contribute to open-source projects, work on side projects to experiment with new technologies, peer learning and knowledge sharing, follow industry thought leaders. Should demonstrate genuine passion for technology and self-directed learning."
                             }
                         ]
                     }
@@ -716,7 +1167,7 @@
             };
 
             calculateTotalQuestions();
-            alert('Sample SRE questions loaded! ' + totalQuestions + ' questions ready.');
+            showMessage(`✓ Loaded ${totalQuestions} comprehensive SRE interview questions across ${questionsData.sections.length} skill areas`, 'success');
             document.getElementById('candidateNames').value = 'Pramod, Eshani, Chaveen, Ishara';
         }
 
@@ -729,20 +1180,20 @@
         // Initialize candidates
         function initializeCandidates() {
             if (!questionsData) {
-                alert('Please load questions first!');
+                showMessage('Please load interview questions first before setting up candidates.', 'warning');
                 return;
             }
 
             const namesInput = document.getElementById('candidateNames').value;
             if (!namesInput) {
-                alert('Please enter candidate names!');
+                showMessage('Please enter at least one candidate name to begin.', 'warning');
                 return;
             }
 
             candidates = namesInput.split(',').map(name => name.trim()).filter(name => name);
 
             if (candidates.length === 0) {
-                alert('Please enter at least one candidate name!');
+                showMessage('Please enter valid candidate names separated by commas.', 'warning');
                 return;
             }
 
@@ -760,6 +1211,7 @@
             document.getElementById('individualMode').classList.remove('hidden');
 
             displayCandidateButtons();
+            showMessage(`✓ Interview session initialized for ${candidates.length} candidate(s). Select a candidate to begin evaluation.`, 'success');
         }
 
         // Display candidate buttons
@@ -791,6 +1243,7 @@
                     const badge = document.createElement('span');
                     badge.className = 'candidate-score-badge';
                     badge.textContent = completedQuestions;
+                    badge.title = `${completedQuestions} of ${totalQuestions} questions answered`;
                     btn.appendChild(badge);
 
                     if (completedQuestions === totalQuestions) {
@@ -844,7 +1297,9 @@
 
             // Update counter and progress
             document.getElementById('questionCounter').textContent = `Question ${currentQuestionIndex + 1} of ${totalQuestions}`;
-            document.getElementById('progressBar').style.width = `${((currentQuestionIndex + 1) / totalQuestions) * 100}%`;
+            const progressPercent = Math.round(((currentQuestionIndex + 1) / totalQuestions) * 100);
+            document.getElementById('progressBar').style.width = `${progressPercent}%`;
+            document.getElementById('progressText').textContent = `${progressPercent}% Complete`;
 
             // Update navigation buttons
             document.getElementById('prevBtn').disabled = currentQuestionIndex === 0;
@@ -858,8 +1313,8 @@
 
             card.innerHTML = `
                 <div class="section-info">
-                    <span>${currentSection.name}</span>
-                    <span>Weight: ${currentSection.weight}%</span>
+                    <span>📚 ${currentSection.name}</span>
+                    <span>⚖️ Section Weight: ${currentSection.weight}%</span>
                 </div>
 
                 <div class="question-text">
@@ -867,27 +1322,39 @@
                 </div>
 
                 <div class="expected-answer">
-                    <strong>Expected Answer Points:</strong><br>
-                    ${currentQ.expectedAnswer}
+                    <strong>Evaluation Criteria & Key Points to Assess:</strong>
+                    <div class="expected-answer-content">${currentQ.expectedAnswer}</div>
                 </div>
 
                 <div class="score-section">
                     <div class="score-label">
-                        Score for <strong>${currentCandidate}</strong>:
+                        Rate ${currentCandidate}'s Response:
                     </div>
+
+                    <div class="score-guide">
+                        <strong>Scoring Reference:</strong> 0-2 = Poor/No Knowledge | 3-4 = Basic Understanding | 5-6 = Competent | 7-8 = Proficient | 9-10 = Expert Level
+                    </div>
+
                     <div class="score-buttons">
                         ${[0,1,2,3,4,5,6,7,8,9,10].map(score => `
                             <button class="score-btn ${existingScore === score ? 'selected' : ''}"
-                                    onclick="setScore(${score}, '${currentSection.name}', ${currentQ.id})">
+                                    onclick="setScore(${score}, '${currentSection.name}', ${currentQ.id})"
+                                    title="Score: ${score}/10">
                                 ${score}
                             </button>
                         `).join('')}
                     </div>
 
-                    <textarea class="notes-input"
-                              placeholder="Notes for this answer..."
-                              id="questionNotes"
-                              onchange="saveNote('${currentSection.name}', ${currentQ.id})">${existingNote}</textarea>
+                    <div class="notes-section">
+                        <label for="questionNotes">
+                            Interview Notes & Observations:
+                            <span class="tooltip" data-tooltip="Document specific examples, strengths, concerns, and notable responses">ℹ️</span>
+                        </label>
+                        <textarea class="notes-input"
+                                  placeholder="Record specific details about the candidate's answer, technical depth demonstrated, examples provided, areas of strength or concern, follow-up questions asked, and any other relevant observations..."
+                                  id="questionNotes"
+                                  onchange="saveNote('${currentSection.name}', ${currentQ.id})">${existingNote}</textarea>
+                    </div>
                 </div>
             `;
         }
@@ -948,10 +1415,19 @@
             const totalScore = calculateTotalScore(currentCandidate);
             const percentage = ((totalScore / (totalQuestions * 10)) * 100).toFixed(1);
 
+            let recommendation = '';
+            if (percentage >= 72) recommendation = '🌟 Strong Hire Recommendation';
+            else if (percentage >= 60) recommendation = '✅ Hire Recommendation';
+            else if (percentage >= 48) recommendation = '⚠️ Consider with Training';
+            else recommendation = '❌ Not Recommended';
+
             document.getElementById('completionText').innerHTML = `
-                <strong>${currentCandidate}</strong> interview completed!<br>
-                Answered: ${answeredQuestions}/${totalQuestions} questions<br>
-                Total Score: ${totalScore}/${totalQuestions * 10} (${percentage}%)
+                <strong>${currentCandidate}</strong> - Interview Assessment Completed<br><br>
+                <div style="font-size: 1.1em;">
+                    Questions Evaluated: <strong>${answeredQuestions} / ${totalQuestions}</strong><br>
+                    Total Score: <strong>${totalScore} / ${totalQuestions * 10}</strong> (${percentage}%)<br><br>
+                    ${recommendation}
+                </div>
             `;
 
             displayCandidateButtons();
@@ -983,8 +1459,9 @@
             if (nextCandidate) {
                 selectCandidate(nextCandidate);
             } else {
-                alert('All candidates have been interviewed! Click "View Summary" to see results.');
+                showMessage('All candidate interviews have been completed! View the summary for comprehensive results.', 'success');
                 document.getElementById('questionContainer').classList.add('hidden');
+                showSummary();
             }
         }
 
@@ -1005,7 +1482,7 @@
         // Show summary
         function showSummary() {
             if (candidates.length === 0) {
-                alert('No candidates have been set up yet!');
+                showMessage('No candidate data available. Please initialize the interview session first.', 'warning');
                 return;
             }
 
@@ -1042,7 +1519,9 @@
             // Build summary HTML
             let summaryHTML = `
                 <div class="summary-section">
-                    <h2>📊 Interview Summary - ${questionsData.position}</h2>
+                    <h2>📊 Comprehensive Interview Results</h2>
+                    <p style="font-size: 1.1em; margin-top: 10px;">Position: <strong>${questionsData.position}</strong></p>
+                    <p style="font-size: 1em; margin-top: 5px;">Assessment Date: ${new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
 
                     <div class="final-scores">
             `;
@@ -1051,14 +1530,19 @@
                 const scoreClass = result.percentage >= 70 ? 'score-excellent' :
                                    result.percentage >= 50 ? 'score-good' : 'score-average';
                 const rankClass = `rank-${Math.min(index + 1, 4)}`;
+                const rankLabels = ['🥇 1st Place', '🥈 2nd Place', '🥉 3rd Place', '4th Place'];
 
                 summaryHTML += `
                     <div class="candidate-score-card">
                         <div class="candidate-name">${result.name}</div>
                         <div class="total-score ${scoreClass}">${result.total}/${result.maxScore}</div>
-                        <div>${result.percentage}%</div>
-                        <div>Answered: ${result.answered}/${totalQuestions}</div>
-                        <span class="rank-badge ${rankClass}">Rank #${index + 1}</span>
+                        <div style="font-size: 1.2em; font-weight: 600; color: ${result.percentage >= 70 ? '#38a169' : result.percentage >= 50 ? '#dd6b20' : '#e53e3e'}">
+                            ${result.percentage}%
+                        </div>
+                        <div style="margin-top: 10px; color: #718096;">
+                            Questions Answered: ${result.answered}/${totalQuestions}
+                        </div>
+                        <span class="rank-badge ${rankClass}">${rankLabels[Math.min(index, 3)]}</span>
                     </div>
                 `;
             });
@@ -1066,7 +1550,7 @@
             summaryHTML += `
                     </div>
 
-                    <h3 style="margin-top: 30px;">Detailed Section Scores</h3>
+                    <h3 style="margin-top: 40px; font-size: 1.5em;">Detailed Section Performance</h3>
                     <table class="summary-table">
                         <thead>
                             <tr>
@@ -1075,9 +1559,9 @@
 
             // Add section headers
             questionsData.sections.forEach(section => {
-                summaryHTML += `<th>${section.name} (${section.weight}%)</th>`;
+                summaryHTML += `<th>${section.name}<br><span style="font-size: 0.85em;">(${section.weight}%)</span></th>`;
             });
-            summaryHTML += `<th>Total</th></tr></thead><tbody>`;
+            summaryHTML += `<th style="background: linear-gradient(135deg, #9f7aea 0%, #805ad5 100%);">Total Score</th></tr></thead><tbody>`;
 
             // Add candidate rows
             candidateResults.forEach(result => {
@@ -1094,10 +1578,11 @@
                         }
                     });
 
-                    summaryHTML += `<td>${sectionScore}/${maxSectionScore}</td>`;
+                    const sectionPercent = ((sectionScore / maxSectionScore) * 100).toFixed(0);
+                    summaryHTML += `<td>${sectionScore}/${maxSectionScore} <span style="color: #718096;">(${sectionPercent}%)</span></td>`;
                 });
 
-                summaryHTML += `<td><strong>${result.total}/${result.maxScore}</strong></td></tr>`;
+                summaryHTML += `<td><strong style="color: #2b6cb0; font-size: 1.1em;">${result.total}/${result.maxScore}</strong></td></tr>`;
             });
 
             summaryHTML += `
@@ -1105,9 +1590,10 @@
                     </table>
 
                     <div class="export-section">
-                        <button class="export-btn" onclick="exportToJSON()">📥 Export to JSON</button>
-                        <button class="export-btn" onclick="exportToCSV()">📊 Export to CSV</button>
-                        <button onclick="backToInterview()" style="background: #667eea;">← Back to Interviews</button>
+                        <button class="export-btn" onclick="exportToJSON()">📥 Download Results (JSON)</button>
+                        <button class="export-btn" onclick="exportToCSV()">📊 Download Results (CSV)</button>
+                        <button onclick="backToInterview()" style="background: linear-gradient(135deg, #4299e1 0%, #3182ce 100%);">← Return to Interviews</button>
+                        <button onclick="resetAll()" style="background: linear-gradient(135deg, #fc8181 0%, #f56565 100%);">🔄 Start New Session</button>
                     </div>
                 </div>
             `;
@@ -1126,6 +1612,7 @@
             const exportData = {
                 position: questionsData.position,
                 exportDate: new Date().toISOString(),
+                exportedBy: "Interview Evaluation System",
                 candidates: candidates.map(candidate => {
                     return {
                         name: candidate,
@@ -1156,14 +1643,16 @@
             const url = URL.createObjectURL(dataBlob);
             const link = document.createElement('a');
             link.href = url;
-            link.download = `interview-results-${Date.now()}.json`;
+            link.download = `interview-results-${new Date().toISOString().split('T')[0]}.json`;
             link.click();
             URL.revokeObjectURL(url);
+
+            showMessage('✓ Interview results successfully downloaded as JSON file', 'success');
         }
 
         // Export to CSV
         function exportToCSV() {
-            let csv = 'Candidate,Section,Question,Score,Notes\n';
+            let csv = 'Candidate,Section,Question,Score (0-10),Interview Notes\n';
 
             candidates.forEach(candidate => {
                 questionsData.sections.forEach(section => {
@@ -1181,14 +1670,16 @@
             const url = URL.createObjectURL(dataBlob);
             const link = document.createElement('a');
             link.href = url;
-            link.download = `interview-results-${Date.now()}.csv`;
+            link.download = `interview-results-${new Date().toISOString().split('T')[0]}.csv`;
             link.click();
             URL.revokeObjectURL(url);
+
+            showMessage('✓ Interview results successfully downloaded as CSV file', 'success');
         }
 
         // Reset all
         function resetAll() {
-            if (confirm('Are you sure you want to reset everything? This will clear all scores and notes.')) {
+            if (confirm('Are you sure you want to start a new interview session? This will permanently erase all current scores, notes, and candidate data.')) {
                 questionsData = null;
                 candidates = [];
                 scores = {};
@@ -1204,7 +1695,7 @@
                 document.getElementById('jsonFile').value = '';
                 document.getElementById('csvFile').value = '';
 
-                alert('System reset complete!');
+                showMessage('✓ System reset complete. Ready to start a new interview session.', 'success');
             }
         }
     </script>
