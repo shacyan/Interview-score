@@ -1,0 +1,1212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interview Scoring System - Individual Mode</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+
+        .mode-selector {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .mode-btn {
+            padding: 15px 30px;
+            border-radius: 10px;
+            border: 2px solid #667eea;
+            background: white;
+            color: #667eea;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .mode-btn.active {
+            background: #667eea;
+            color: white;
+        }
+
+        .header-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        button:hover {
+            background: #5a67d8;
+            transform: translateY(-2px);
+        }
+
+        .file-input-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+
+        input[type="file"] {
+            position: absolute;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        .file-label {
+            background: #48bb78;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: inline-block;
+            transition: all 0.3s;
+        }
+
+        .file-label:hover {
+            background: #38a169;
+        }
+
+        .candidate-selector {
+            background: #fff3cd;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .candidate-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .candidate-btn {
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: 2px solid #667eea;
+            background: white;
+            color: #667eea;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .candidate-btn.active {
+            background: #667eea;
+            color: white;
+        }
+
+        .candidate-btn.completed {
+            background: #48bb78;
+            color: white;
+            border-color: #48bb78;
+        }
+
+        .candidate-score-badge {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: #fc8181;
+            color: white;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .question-navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #e6fffa;
+            border-radius: 10px;
+        }
+
+        .question-counter {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .nav-btn {
+            padding: 8px 16px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .nav-btn:disabled {
+            background: #cbd5e0;
+            cursor: not-allowed;
+        }
+
+        .question-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        .section-info {
+            background: #667eea;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .question-text {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .expected-answer {
+            background: #e6fffa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #48bb78;
+        }
+
+        .score-section {
+            background: #f7fafc;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .score-label {
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            color: #555;
+        }
+
+        .score-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .score-btn {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            border: 2px solid #cbd5e0;
+            background: white;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .score-btn:hover {
+            transform: scale(1.1);
+            border-color: #667eea;
+        }
+
+        .score-btn.selected {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .notes-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #cbd5e0;
+            border-radius: 8px;
+            margin-top: 15px;
+            resize: vertical;
+            min-height: 100px;
+            font-size: 14px;
+        }
+
+        .progress-bar {
+            background: #e2e8f0;
+            height: 10px;
+            border-radius: 5px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #48bb78, #667eea);
+            transition: width 0.3s;
+        }
+
+        .summary-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin-top: 30px;
+        }
+
+        .summary-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: white;
+            color: #333;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .summary-table th,
+        .summary-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .summary-table th {
+            background: #667eea;
+            color: white;
+            font-weight: bold;
+        }
+
+        .summary-table tr:hover {
+            background: #f7fafc;
+        }
+
+        .final-scores {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .candidate-score-card {
+            background: white;
+            color: #333;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .candidate-name {
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+            color: #667eea;
+        }
+
+        .total-score {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .score-excellent { color: #48bb78; }
+        .score-good { color: #f6ad55; }
+        .score-average { color: #fc8181; }
+
+        .rank-badge {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            margin-top: 10px;
+        }
+
+        .rank-1 { background: gold; color: #333; }
+        .rank-2 { background: silver; color: #333; }
+        .rank-3 { background: #cd7f32; color: white; }
+        .rank-4 { background: #666; color: white; }
+
+        .export-section {
+            text-align: center;
+            margin-top: 30px;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .export-btn {
+            background: #48bb78;
+            padding: 15px 30px;
+            font-size: 1.1em;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .sample-json {
+            background: #2d3748;
+            color: #48bb78;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            margin-top: 20px;
+            overflow-x: auto;
+            white-space: pre;
+        }
+
+        .completion-message {
+            text-align: center;
+            padding: 30px;
+            background: #48bb78;
+            color: white;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .completion-message h2 {
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 Interview Scoring System</h1>
+
+        <div class="mode-selector">
+            <button class="mode-btn active" onclick="setMode('individual')">
+                👤 Individual Interview Mode
+            </button>
+            <button class="mode-btn" onclick="setMode('comparison')">
+                👥 Comparison Mode
+            </button>
+        </div>
+
+        <div class="header-section">
+            <div class="button-group">
+                <div class="file-input-wrapper">
+                    <input type="file" id="jsonFile" accept=".json">
+                    <label for="jsonFile" class="file-label">📁 Load Questions (JSON)</label>
+                </div>
+                <div class="file-input-wrapper">
+                    <input type="file" id="csvFile" accept=".csv">
+                    <label for="csvFile" class="file-label" style="background: #f6ad55;">📊 Load from CSV</label>
+                </div>
+                <button onclick="loadSampleQuestions()">📝 Load SRE Sample</button>
+                <button onclick="showJSONFormat()">📋 Show Format</button>
+                <button onclick="showSummary()">📊 View Summary</button>
+                <button onclick="resetAll()">🔄 Reset All</button>
+            </div>
+
+            <div id="candidateSetup" class="candidate-selector">
+                <strong>Enter Candidate Names (comma separated):</strong>
+                <input type="text" id="candidateNames" style="width: 80%; padding: 10px; margin: 10px 0; border-radius: 5px; border: 2px solid #cbd5e0;"
+                       placeholder="e.g., Pramod, Eshani, Chaveen, Ishara">
+                <button onclick="initializeCandidates()" style="background: #48bb78; margin-left: 10px;">
+                    ✅ Set Candidates & Start
+                </button>
+            </div>
+
+            <div id="jsonFormatSection" class="hidden">
+                <h3>JSON Format Example:</h3>
+                <pre class="sample-json">{
+  "position": "Infrastructure Support Engineer (SRE)",
+  "sections": [
+    {
+      "name": "Monitoring & Observability",
+      "weight": 25,
+      "questions": [
+        {
+          "id": 1,
+          "question": "Your question text here",
+          "expectedAnswer": "Key points to look for"
+        }
+      ]
+    }
+  ]
+}</pre>
+            </div>
+        </div>
+
+        <div id="individualMode" class="hidden">
+            <div class="candidate-selector">
+                <strong>Select Candidate to Interview:</strong>
+                <div class="candidate-buttons" id="candidateButtons"></div>
+            </div>
+
+            <div id="questionContainer" class="hidden">
+                <div class="question-navigation">
+                    <span class="question-counter" id="questionCounter">Question 1 of X</span>
+                    <div class="nav-buttons">
+                        <button class="nav-btn" onclick="previousQuestion()" id="prevBtn">← Previous</button>
+                        <button class="nav-btn" onclick="nextQuestion()" id="nextBtn">Next →</button>
+                        <button class="nav-btn" onclick="finishCandidate()" style="background: #48bb78;">Finish Candidate</button>
+                    </div>
+                </div>
+
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressBar" style="width: 0%"></div>
+                </div>
+
+                <div class="question-card" id="questionCard"></div>
+            </div>
+
+            <div id="completionMessage" class="hidden completion-message">
+                <h2>✅ Interview Complete!</h2>
+                <p id="completionText"></p>
+                <button onclick="selectNextCandidate()" style="background: white; color: #667eea; margin-top: 15px;">
+                    Interview Next Candidate
+                </button>
+            </div>
+        </div>
+
+        <div id="summaryContainer" class="hidden"></div>
+    </div>
+
+    <script>
+        let questionsData = null;
+        let candidates = [];
+        let scores = {};
+        let notes = {};
+        let currentMode = 'individual';
+        let currentCandidate = null;
+        let currentQuestionIndex = 0;
+        let totalQuestions = 0;
+
+        // Set mode
+        function setMode(mode) {
+            currentMode = mode;
+            document.querySelectorAll('.mode-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            if (mode === 'comparison') {
+                alert('Comparison mode allows you to see all candidates for each question. Please use Individual mode for one-by-one interviews.');
+            }
+        }
+
+        // Load JSON file
+        document.getElementById('jsonFile').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    try {
+                        questionsData = JSON.parse(e.target.result);
+                        calculateTotalQuestions();
+                        alert('Questions loaded successfully! ' + totalQuestions + ' questions ready.');
+                    } catch (error) {
+                        alert('Invalid JSON file. Please check the format.');
+                    }
+                };
+                reader.readAsText(file);
+            }
+        });
+
+        // Load CSV file
+        document.getElementById('csvFile').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    parseCSVtoJSON(e.target.result);
+                };
+                reader.readAsText(file);
+            }
+        });
+
+        // Parse CSV to JSON format
+        function parseCSVtoJSON(csv) {
+            const lines = csv.split('\n');
+            const sections = {};
+
+            // Skip header
+            for (let i = 1; i < lines.length; i++) {
+                const line = lines[i].trim();
+                if (!line) continue;
+
+                const parts = line.split(',');
+                if (parts.length < 4) continue;
+
+                const section = parts[0].trim();
+                const weight = parseInt(parts[1]) || 10;
+                const question = parts[2].trim();
+                const expected = parts[3].trim();
+
+                if (!sections[section]) {
+                    sections[section] = {
+                        name: section,
+                        weight: weight,
+                        questions: []
+                    };
+                }
+
+                sections[section].questions.push({
+                    id: i,
+                    question: question.replace(/"/g, ''),
+                    expectedAnswer: expected.replace(/"/g, '')
+                });
+            }
+
+            questionsData = {
+                position: "Imported Position",
+                sections: Object.values(sections)
+            };
+
+            calculateTotalQuestions();
+            alert('CSV loaded successfully! ' + totalQuestions + ' questions imported.');
+        }
+
+        // Calculate total questions
+        function calculateTotalQuestions() {
+            totalQuestions = 0;
+            if (questionsData && questionsData.sections) {
+                questionsData.sections.forEach(section => {
+                    totalQuestions += section.questions.length;
+                });
+            }
+        }
+
+        // Load sample questions
+        function loadSampleQuestions() {
+            questionsData = {
+                "position": "Infrastructure Support Engineer (SRE)",
+                "sections": [
+                    {
+                        "name": "Monitoring & Observability",
+                        "weight": 25,
+                        "questions": [
+                            {
+                                "id": 1,
+                                "question": "Describe a monitoring stack you've worked with. How would you set up monitoring for microservices on AWS?",
+                                "expectedAnswer": "CloudWatch, Prometheus+Grafana, ELK/EFK Stack, X-Ray, Golden Signals (Latency, Traffic, Errors, Saturation)"
+                            },
+                            {
+                                "id": 2,
+                                "question": "How would you implement alerting rules to reduce false positives?",
+                                "expectedAnswer": "Multi-condition alerts, dynamic thresholds, alert hierarchy (P1/P2/P3), deduplication, suppression windows"
+                            },
+                            {
+                                "id": 3,
+                                "question": "Application response time increased from 200ms to 2s. Walk through troubleshooting.",
+                                "expectedAnswer": "Check dashboards, infrastructure metrics (CPU/Memory/Disk/Network), application logs, database queries, external dependencies"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "AWS Technical Knowledge",
+                        "weight": 20,
+                        "questions": [
+                            {
+                                "id": 4,
+                                "question": "Explain the difference between EC2, ECS, and Lambda. When would you use each?",
+                                "expectedAnswer": "EC2: Full control VMs, ECS: Container orchestration, Lambda: Serverless for event-driven. Consider: control needs, scaling, cost, timeout limits"
+                            },
+                            {
+                                "id": 5,
+                                "question": "How would you implement auto-scaling for variable traffic patterns?",
+                                "expectedAnswer": "Target tracking, step scaling, predictive scaling, CloudWatch alarms, proper cooldown periods"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Incident Response",
+                        "weight": 30,
+                        "questions": [
+                            {
+                                "id": 6,
+                                "question": "Production database is down at 2 AM. Walk through your incident response.",
+                                "expectedAnswer": "Acknowledge alert, assess impact, join bridge, diagnose (logs/metrics/connections), communicate, mitigate, document, post-mortem"
+                            },
+                            {
+                                "id": 7,
+                                "question": "What should be included in a post-mortem report?",
+                                "expectedAnswer": "Timeline, root cause (5 Whys), impact assessment, what went well/wrong, action items with owners and dates"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Linux & Infrastructure",
+                        "weight": 15,
+                        "questions": [
+                            {
+                                "id": 8,
+                                "question": "Write a bash script to check if a service is running and restart if down.",
+                                "expectedAnswer": "systemctl is-active, restart logic with retries, logging, error handling, notification on failure"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "24/7 Support",
+                        "weight": 10,
+                        "questions": [
+                            {
+                                "id": 9,
+                                "question": "Prioritize: DB backup failure, slow app, password reset, disk 85%, dev env down",
+                                "expectedAnswer": "1. DB backup (P1-data loss risk), 2. Slow app (P1/P2-customer impact), 3. Disk 85% (P2-preventive), 4. Dev env (P3), 5. Password (P3)"
+                            }
+                        ]
+                    }
+                ]
+            };
+
+            calculateTotalQuestions();
+            alert('Sample SRE questions loaded! ' + totalQuestions + ' questions ready.');
+            document.getElementById('candidateNames').value = 'Pramod, Eshani, Chaveen, Ishara';
+        }
+
+        // Show JSON format
+        function showJSONFormat() {
+            const formatSection = document.getElementById('jsonFormatSection');
+            formatSection.classList.toggle('hidden');
+        }
+
+        // Initialize candidates
+        function initializeCandidates() {
+            if (!questionsData) {
+                alert('Please load questions first!');
+                return;
+            }
+
+            const namesInput = document.getElementById('candidateNames').value;
+            if (!namesInput) {
+                alert('Please enter candidate names!');
+                return;
+            }
+
+            candidates = namesInput.split(',').map(name => name.trim()).filter(name => name);
+
+            if (candidates.length === 0) {
+                alert('Please enter at least one candidate name!');
+                return;
+            }
+
+            // Initialize scores and notes
+            candidates.forEach(candidate => {
+                if (!scores[candidate]) {
+                    scores[candidate] = {};
+                }
+                if (!notes[candidate]) {
+                    notes[candidate] = {};
+                }
+            });
+
+            document.getElementById('candidateSetup').classList.add('hidden');
+            document.getElementById('individualMode').classList.remove('hidden');
+
+            displayCandidateButtons();
+        }
+
+        // Display candidate buttons
+        function displayCandidateButtons() {
+            const container = document.getElementById('candidateButtons');
+            container.innerHTML = '';
+
+            candidates.forEach(candidate => {
+                const btn = document.createElement('button');
+                btn.className = 'candidate-btn';
+                btn.textContent = candidate;
+                btn.onclick = () => selectCandidate(candidate);
+
+                // Check if candidate has scores
+                const candidateScores = scores[candidate];
+                let completedQuestions = 0;
+
+                if (candidateScores) {
+                    questionsData.sections.forEach(section => {
+                        section.questions.forEach(q => {
+                            if (candidateScores[`${section.name}_${q.id}`] !== undefined) {
+                                completedQuestions++;
+                            }
+                        });
+                    });
+                }
+
+                if (completedQuestions > 0) {
+                    const badge = document.createElement('span');
+                    badge.className = 'candidate-score-badge';
+                    badge.textContent = completedQuestions;
+                    btn.appendChild(badge);
+
+                    if (completedQuestions === totalQuestions) {
+                        btn.classList.add('completed');
+                    }
+                }
+
+                container.appendChild(btn);
+            });
+        }
+
+        // Select candidate
+        function selectCandidate(candidate) {
+            currentCandidate = candidate;
+            currentQuestionIndex = 0;
+
+            // Update UI
+            document.querySelectorAll('.candidate-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.textContent.includes(candidate)) {
+                    btn.classList.add('active');
+                }
+            });
+
+            document.getElementById('questionContainer').classList.remove('hidden');
+            document.getElementById('completionMessage').classList.add('hidden');
+
+            displayQuestion();
+        }
+
+        // Display current question
+        function displayQuestion() {
+            let questionCount = 0;
+            let currentQ = null;
+            let currentSection = null;
+
+            // Find current question
+            for (let section of questionsData.sections) {
+                for (let question of section.questions) {
+                    if (questionCount === currentQuestionIndex) {
+                        currentQ = question;
+                        currentSection = section;
+                        break;
+                    }
+                    questionCount++;
+                }
+                if (currentQ) break;
+            }
+
+            if (!currentQ) return;
+
+            // Update counter and progress
+            document.getElementById('questionCounter').textContent = `Question ${currentQuestionIndex + 1} of ${totalQuestions}`;
+            document.getElementById('progressBar').style.width = `${((currentQuestionIndex + 1) / totalQuestions) * 100}%`;
+
+            // Update navigation buttons
+            document.getElementById('prevBtn').disabled = currentQuestionIndex === 0;
+            document.getElementById('nextBtn').disabled = currentQuestionIndex === totalQuestions - 1;
+
+            // Display question
+            const card = document.getElementById('questionCard');
+            const scoreKey = `${currentSection.name}_${currentQ.id}`;
+            const existingScore = scores[currentCandidate][scoreKey];
+            const existingNote = notes[currentCandidate][scoreKey] || '';
+
+            card.innerHTML = `
+                <div class="section-info">
+                    <span>${currentSection.name}</span>
+                    <span>Weight: ${currentSection.weight}%</span>
+                </div>
+
+                <div class="question-text">
+                    ${currentQ.question}
+                </div>
+
+                <div class="expected-answer">
+                    <strong>Expected Answer Points:</strong><br>
+                    ${currentQ.expectedAnswer}
+                </div>
+
+                <div class="score-section">
+                    <div class="score-label">
+                        Score for <strong>${currentCandidate}</strong>:
+                    </div>
+                    <div class="score-buttons">
+                        ${[0,1,2,3,4,5,6,7,8,9,10].map(score => `
+                            <button class="score-btn ${existingScore === score ? 'selected' : ''}"
+                                    onclick="setScore(${score}, '${currentSection.name}', ${currentQ.id})">
+                                ${score}
+                            </button>
+                        `).join('')}
+                    </div>
+
+                    <textarea class="notes-input"
+                              placeholder="Notes for this answer..."
+                              id="questionNotes"
+                              onchange="saveNote('${currentSection.name}', ${currentQ.id})">${existingNote}</textarea>
+                </div>
+            `;
+        }
+
+        // Set score
+        function setScore(score, sectionName, questionId) {
+            const key = `${sectionName}_${questionId}`;
+            scores[currentCandidate][key] = score;
+
+            // Update button selection
+            document.querySelectorAll('.score-btn').forEach(btn => {
+                btn.classList.remove('selected');
+                if (btn.textContent == score) {
+                    btn.classList.add('selected');
+                }
+            });
+
+            // Update candidate button badge
+            displayCandidateButtons();
+        }
+
+        // Save note
+        function saveNote(sectionName, questionId) {
+            const key = `${sectionName}_${questionId}`;
+            const noteText = document.getElementById('questionNotes').value;
+            notes[currentCandidate][key] = noteText;
+        }
+
+        // Navigate questions
+        function previousQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                displayQuestion();
+            }
+        }
+
+        function nextQuestion() {
+            if (currentQuestionIndex < totalQuestions - 1) {
+                currentQuestionIndex++;
+                displayQuestion();
+            }
+        }
+
+        // Finish candidate
+        function finishCandidate() {
+            document.getElementById('questionContainer').classList.add('hidden');
+            document.getElementById('completionMessage').classList.remove('hidden');
+
+            let answeredQuestions = 0;
+            questionsData.sections.forEach(section => {
+                section.questions.forEach(q => {
+                    if (scores[currentCandidate][`${section.name}_${q.id}`] !== undefined) {
+                        answeredQuestions++;
+                    }
+                });
+            });
+
+            const totalScore = calculateTotalScore(currentCandidate);
+            const percentage = ((totalScore / (totalQuestions * 10)) * 100).toFixed(1);
+
+            document.getElementById('completionText').innerHTML = `
+                <strong>${currentCandidate}</strong> interview completed!<br>
+                Answered: ${answeredQuestions}/${totalQuestions} questions<br>
+                Total Score: ${totalScore}/${totalQuestions * 10} (${percentage}%)
+            `;
+
+            displayCandidateButtons();
+        }
+
+        // Select next candidate
+        function selectNextCandidate() {
+            document.getElementById('completionMessage').classList.add('hidden');
+            document.getElementById('questionContainer').classList.remove('hidden');
+
+            // Find next candidate without full score
+            let nextCandidate = null;
+            for (let candidate of candidates) {
+                let completed = 0;
+                questionsData.sections.forEach(section => {
+                    section.questions.forEach(q => {
+                        if (scores[candidate][`${section.name}_${q.id}`] !== undefined) {
+                            completed++;
+                        }
+                    });
+                });
+
+                if (completed < totalQuestions) {
+                    nextCandidate = candidate;
+                    break;
+                }
+            }
+
+            if (nextCandidate) {
+                selectCandidate(nextCandidate);
+            } else {
+                alert('All candidates have been interviewed! Click "View Summary" to see results.');
+                document.getElementById('questionContainer').classList.add('hidden');
+            }
+        }
+
+        // Calculate total score for a candidate
+        function calculateTotalScore(candidate) {
+            let total = 0;
+            questionsData.sections.forEach(section => {
+                section.questions.forEach(q => {
+                    const score = scores[candidate][`${section.name}_${q.id}`];
+                    if (score !== undefined) {
+                        total += score;
+                    }
+                });
+            });
+            return total;
+        }
+
+        // Show summary
+        function showSummary() {
+            if (candidates.length === 0) {
+                alert('No candidates have been set up yet!');
+                return;
+            }
+
+            // Hide other sections
+            document.getElementById('individualMode').classList.add('hidden');
+
+            const container = document.getElementById('summaryContainer');
+            container.classList.remove('hidden');
+
+            // Calculate scores and rankings
+            const candidateResults = candidates.map(candidate => {
+                const total = calculateTotalScore(candidate);
+                const maxScore = totalQuestions * 10;
+                const percentage = ((total / maxScore) * 100).toFixed(1);
+
+                let answeredQuestions = 0;
+                questionsData.sections.forEach(section => {
+                    section.questions.forEach(q => {
+                        if (scores[candidate][`${section.name}_${q.id}`] !== undefined) {
+                            answeredQuestions++;
+                        }
+                    });
+                });
+
+                return {
+                    name: candidate,
+                    total: total,
+                    maxScore: maxScore,
+                    percentage: percentage,
+                    answered: answeredQuestions
+                };
+            }).sort((a, b) => b.total - a.total);
+
+            // Build summary HTML
+            let summaryHTML = `
+                <div class="summary-section">
+                    <h2>📊 Interview Summary - ${questionsData.position}</h2>
+
+                    <div class="final-scores">
+            `;
+
+            candidateResults.forEach((result, index) => {
+                const scoreClass = result.percentage >= 70 ? 'score-excellent' :
+                                   result.percentage >= 50 ? 'score-good' : 'score-average';
+                const rankClass = `rank-${Math.min(index + 1, 4)}`;
+
+                summaryHTML += `
+                    <div class="candidate-score-card">
+                        <div class="candidate-name">${result.name}</div>
+                        <div class="total-score ${scoreClass}">${result.total}/${result.maxScore}</div>
+                        <div>${result.percentage}%</div>
+                        <div>Answered: ${result.answered}/${totalQuestions}</div>
+                        <span class="rank-badge ${rankClass}">Rank #${index + 1}</span>
+                    </div>
+                `;
+            });
+
+            summaryHTML += `
+                    </div>
+
+                    <h3 style="margin-top: 30px;">Detailed Section Scores</h3>
+                    <table class="summary-table">
+                        <thead>
+                            <tr>
+                                <th>Candidate</th>
+            `;
+
+            // Add section headers
+            questionsData.sections.forEach(section => {
+                summaryHTML += `<th>${section.name} (${section.weight}%)</th>`;
+            });
+            summaryHTML += `<th>Total</th></tr></thead><tbody>`;
+
+            // Add candidate rows
+            candidateResults.forEach(result => {
+                summaryHTML += `<tr><td><strong>${result.name}</strong></td>`;
+
+                questionsData.sections.forEach(section => {
+                    let sectionScore = 0;
+                    let maxSectionScore = section.questions.length * 10;
+
+                    section.questions.forEach(q => {
+                        const score = scores[result.name][`${section.name}_${q.id}`];
+                        if (score !== undefined) {
+                            sectionScore += score;
+                        }
+                    });
+
+                    summaryHTML += `<td>${sectionScore}/${maxSectionScore}</td>`;
+                });
+
+                summaryHTML += `<td><strong>${result.total}/${result.maxScore}</strong></td></tr>`;
+            });
+
+            summaryHTML += `
+                        </tbody>
+                    </table>
+
+                    <div class="export-section">
+                        <button class="export-btn" onclick="exportToJSON()">📥 Export to JSON</button>
+                        <button class="export-btn" onclick="exportToCSV()">📊 Export to CSV</button>
+                        <button onclick="backToInterview()" style="background: #667eea;">← Back to Interviews</button>
+                    </div>
+                </div>
+            `;
+
+            container.innerHTML = summaryHTML;
+        }
+
+        // Back to interview
+        function backToInterview() {
+            document.getElementById('summaryContainer').classList.add('hidden');
+            document.getElementById('individualMode').classList.remove('hidden');
+        }
+
+        // Export to JSON
+        function exportToJSON() {
+            const exportData = {
+                position: questionsData.position,
+                exportDate: new Date().toISOString(),
+                candidates: candidates.map(candidate => {
+                    return {
+                        name: candidate,
+                        totalScore: calculateTotalScore(candidate),
+                        maxScore: totalQuestions * 10,
+                        percentage: ((calculateTotalScore(candidate) / (totalQuestions * 10)) * 100).toFixed(1),
+                        sections: questionsData.sections.map(section => {
+                            return {
+                                name: section.name,
+                                weight: section.weight,
+                                questions: section.questions.map(q => {
+                                    const scoreKey = `${section.name}_${q.id}`;
+                                    return {
+                                        id: q.id,
+                                        question: q.question,
+                                        score: scores[candidate][scoreKey] !== undefined ? scores[candidate][scoreKey] : null,
+                                        notes: notes[candidate][scoreKey] || ''
+                                    };
+                                })
+                            };
+                        })
+                    };
+                })
+            };
+
+            const dataStr = JSON.stringify(exportData, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `interview-results-${Date.now()}.json`;
+            link.click();
+            URL.revokeObjectURL(url);
+        }
+
+        // Export to CSV
+        function exportToCSV() {
+            let csv = 'Candidate,Section,Question,Score,Notes\n';
+
+            candidates.forEach(candidate => {
+                questionsData.sections.forEach(section => {
+                    section.questions.forEach(q => {
+                        const scoreKey = `${section.name}_${q.id}`;
+                        const score = scores[candidate][scoreKey] !== undefined ? scores[candidate][scoreKey] : '';
+                        const note = (notes[candidate][scoreKey] || '').replace(/"/g, '""').replace(/\n/g, ' ');
+
+                        csv += `"${candidate}","${section.name}","${q.question.replace(/"/g, '""')}","${score}","${note}"\n`;
+                    });
+                });
+            });
+
+            const dataBlob = new Blob([csv], {type: 'text/csv'});
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `interview-results-${Date.now()}.csv`;
+            link.click();
+            URL.revokeObjectURL(url);
+        }
+
+        // Reset all
+        function resetAll() {
+            if (confirm('Are you sure you want to reset everything? This will clear all scores and notes.')) {
+                questionsData = null;
+                candidates = [];
+                scores = {};
+                notes = {};
+                currentCandidate = null;
+                currentQuestionIndex = 0;
+                totalQuestions = 0;
+
+                document.getElementById('candidateSetup').classList.remove('hidden');
+                document.getElementById('individualMode').classList.add('hidden');
+                document.getElementById('summaryContainer').classList.add('hidden');
+                document.getElementById('candidateNames').value = '';
+                document.getElementById('jsonFile').value = '';
+                document.getElementById('csvFile').value = '';
+
+                alert('System reset complete!');
+            }
+        }
+    </script>
+</body>
+</html>
